@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Acknowledgement</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>	
+	</head>
+	<body>
+		<script>
+			$(document).ready(function() {
+				// Fetches the page hits from the API and display it below on the webpage
+				setInterval(function() {
+					$.ajax({
+						type: 'GET',
+						url: "/current-page-hits",  // Path to fetch the current number of page hits
+						success: function(data) {
+							$("#pageHits").text("Number of Page Hits since the server is online: " + data);
+						},
+						error: function() {
+							console.log("Error while loading the Page Hits!")
+						}
+					});
+				}, 3000); // calls the ajax function every 3 secs
+			});
+		</script>
+		
+		<nav class="navbar navbar-inverse">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="/">Harsh's Store</a>
+    			</div>
+    			<ul class="nav navbar-nav">
+					<li><a href="/createitem">Create a new Item entry</a></li>
+					<li><a href="/listitems">View Items in the Database</a></li>
+				</ul>
+			</div>
+		</nav>
+		
+		<br><br>
+		
+		<div class="container">
+			<h2 style="text-align: center;"> Item Successfully added into the Database! </h2>
+			
+			<br><br><br>
+	
+			<h4 id="pageHits" style="text-align: center;"></h4>     <!-- Number of page hits updated here every 3 secs -->
+		</div>
+	</body>
+</html>
+
+
+

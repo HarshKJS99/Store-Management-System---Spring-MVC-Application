@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Item Entry Form</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>	
+	
+	</head>
+	<body>
+		<script>
+			$(document).ready(function() {
+				// Fetches the page hits from the API and display it below on the webpage
+				setInterval(function() {
+					$.ajax({
+						type: 'GET',
+						url: "/current-page-hits",  // Path to fetch the current number of page hits
+						success: function(data) {
+							$("#pageHits").text("Number of Page Hits since the server is online: " + data);
+						},
+						error: function() {
+							console.log("Error while loading the Page Hits!")
+						}
+					});
+				}, 3000); // calls the ajax function every 3 secs
+			});
+		</script>
+		
+		<nav class="navbar navbar-inverse">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="/">Harsh's Store</a>
+    			</div>
+    			<ul class="nav navbar-nav">
+					<li><a href="/createitem">Create a new Item entry</a></li>
+					<li><a href="/listitems">View Items in the Database</a></li>
+				</ul>
+			</div>
+		</nav>
+		
+		<br><br>
+		
+		<div class="container">
+			<h2> Create a new Item entry into the Database </h2>	
+			<form class="form-horizontal" action="#" th:action="@{/createitem}" th:object="${item}" method="post">
+    			<div class="form-group">
+	    			<label class="control-label col-sm-2" for="itemName">Item Name:</label>
+      				<div class="col-sm-10">
+       					<input style="width:50%;" type="text" th:field="*{name}" class="form-control" id="itemName" placeholder="Item name" name="itemName">
+       					<span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"> </span> <br>
+   					</div>
+   				</div>
+   				
+   				<div class="form-group">
+   					<label class="control-label col-sm-2" for="category">Category:</label>
+   					<div class="col-sm-10">
+   						<input style="width:50%;" type="text" th:field="*{category}" class="form-control" id="category" placeholder="Category" name="category">
+   						<span th:if="${#fields.hasErrors('category')}" th:errors="*{category}"> </span><br>
+					</div>
+				</div>
+				
+				<div class="form-group">
+   					<label class="control-label col-sm-2" for="dept">Department:</label>
+   					<div class="col-sm-10">
+   						<input style="width:50%;" type="text" th:field="*{department}" class="form-control" id="dept" placeholder="Department" name="dept">
+   						<span th:if="${#fields.hasErrors('department')}" th:errors="*{department}"> </span><br>
+					</div>
+				</div>
+				
+				<div class="form-group">
+   					<label class="control-label col-sm-2" for="price">Price($):</label>
+   					<div class="col-sm-10">
+   						<input style="width:50%;" type="number" step="any" th:field="*{price}" class="form-control" id="price" placeholder="Price($)" name="price">
+   						<span th:if="${#fields.hasErrors('price')}" th:errors="*{price}"> </span><br>
+					</div>
+				</div>
+				
+				<div class="form-group">
+   					<label class="control-label col-sm-2" for="color">Color:</label>
+   					<div class="col-sm-10">
+   						<input style="width:50%;" type="text" th:field="*{color}" class="form-control" id="color" placeholder="Color" name="color">
+   						<span th:if="${#fields.hasErrors('color')}" th:errors="*{color}"> </span><br>
+					</div>
+				</div>
+				
+				<div class="form-group">        
+      				<div class="col-sm-offset-2 col-sm-10">
+        				<span> <button type="submit" class="btn btn-default">Add Item</button> </span> 
+        				<span> <button type="reset" class="btn btn-default">Reset</button></span>
+   					</div>
+				</div>
+			</form>
+			<br><br><br>
+	
+			<h4 id="pageHits" style="text-align: center;"></h4>     <!-- Number of page hits updated here every 3 secs -->
+		</div>
+	</body>
+</html>
+
+
+
+
+
+
